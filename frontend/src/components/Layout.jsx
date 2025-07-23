@@ -4,7 +4,7 @@ import { Circle, TrendingUp, Zap, Clock } from "lucide-react"
 import Navbar from "./Navbar"
 import Sidebar from "./Sidebar"
 import axios from "axios"
-
+import { API_BASE_URL } from '../utils/api';
 const Layout = ({ user, onLogout }) => {
   const [tasks, setTasks] = useState([])
   const [loading, setLoading] = useState(true)
@@ -17,11 +17,11 @@ const Layout = ({ user, onLogout }) => {
     try {
       const token = localStorage.getItem("token")
       if (!token) throw new Error("No auth token found")
-
-      const { data } = await axios.get("http://localhost:3000/api/tasks/gp", {
+        console.log(`${API_BASE_URL}api/tasks/gp`)
+      const { data } = await axios.get(`${API_BASE_URL}/api/tasks/gp`, {
         headers: { Authorization: `Bearer ${token}` }
       })
-
+      
       const arr = Array.isArray(data) ? data : 
         Array.isArray(data?.tasks) ? data.tasks :
         Array.isArray(data?.data) ? data.data : []
